@@ -1,0 +1,6 @@
+<%# add navigation links to this file %>
+<% if user_signed_in? %>
+<%= link_to 'Sign out', destroy_user_session_path, class: "btn btn-default navbar-btn" %>
+<% else %>
+<%= link_to 'Sign In', new_user_session_path, class: "btn btn-default navbar-btn" %>
+<% end %>
