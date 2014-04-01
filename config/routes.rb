@@ -1,8 +1,12 @@
 SGA::Application.routes.draw do
   
+  resources :availabilities
+
+  resources :bookings
+
   resources :classrooms
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
 
   root  to: "home#index"

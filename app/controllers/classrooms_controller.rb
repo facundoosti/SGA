@@ -1,10 +1,11 @@
 class ClassroomsController < ApplicationController
   before_action :set_classroom, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /classrooms
   # GET /classrooms.json
   def index
-    @classrooms = Classroom.all
+    @classrooms = ClientApi.class_room_all
   end
 
   # GET /classrooms/1
@@ -25,8 +26,8 @@ class ClassroomsController < ApplicationController
   # POST /classrooms.json
   def create
     @classroom = Classroom.new(classroom_params)
-    Classroom.create @classroom
-
+    ClientApi.classroom_create(@classroom)
+    
     respond_to do |format|
       if true
         format.html { redirect_to @classroom, notice: 'Classroom was successfully created.' }

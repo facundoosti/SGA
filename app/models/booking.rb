@@ -1,11 +1,12 @@
-class Classroom
+class Booking
+	extend ActiveModel::Naming
+  include ActiveModel::Conversion
 
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion   
-  
-  attr_reader :name
-  attr_reader :link
-  attr_reader :description
+  attr_reader :start
+  attr_reader :end
+  attr_reader :status
+  attr_reader :user
+  attr_reader :links
   attr_reader :errors
 
   def initialize args=nil
@@ -15,10 +16,11 @@ class Classroom
       end
     end  
     @errors = ActiveModel::Errors.new(self)
-  end  
+  end
 
   def persisted?
     false
   end
+
 
 end

@@ -1,0 +1,7 @@
+api_host: 'http://localhost:9292'
+development:
+  api_host: 'http://localhost:9292'
+test:
+  api_host: 'http://localhost:9292'
+production:
+  api_host: 'http://localhost:9292'

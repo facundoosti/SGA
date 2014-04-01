@@ -1,25 +1,31 @@
-<%= form_for(@classroom) do |f| %>
-  <% if @classroom.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@classroom.errors.count, "error") %> prohibited this classroom from being saved:</h2>
+<div class="box-body">
+  <%= form_for(@classroom) do |f| %>
 
-      <ul>
-      <% @classroom.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+    <% if @classroom.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@classroom.errors.count, "error") %> prohibited this classroom from being saved:</h2>
+
+        <ul>
+        <% @classroom.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <label>Name</label>
+      <div class="input-group">
+          <input type="text" name="classroom[name]" class="form-control"/>
+      </div><!-- /.input group -->
+      <div class="input-group">
+        <label>Description</label>
+        <textarea class="form-control" rows="3" name="classroom[description]" ></textarea>
+      </div>
+      <div class="box-footer">
+        <button type="submit" name="commit" value="Create Classroom" class="btn btn-primary">Submit</button>
+      </div>  
+    </div>    
   <% end %>
+</div>  
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>

@@ -29,7 +29,4 @@ SGA::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
-  ENV['APP_ID'] = '1471134996433168'
-  ENV['APP_SECRET'] = '231c165bccc626380c0c9bf2b2099e27'
-
 end

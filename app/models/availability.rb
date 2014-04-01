@@ -1,11 +1,10 @@
-class Classroom
-
+class Availability
   extend ActiveModel::Naming
-  include ActiveModel::Conversion   
-  
-  attr_reader :name
-  attr_reader :link
-  attr_reader :description
+  include ActiveModel::Conversion
+
+  attr_reader :from
+  attr_reader :to
+  attr_reader :links
   attr_reader :errors
 
   def initialize args=nil
@@ -15,10 +14,9 @@ class Classroom
       end
     end  
     @errors = ActiveModel::Errors.new(self)
-  end  
+  end
 
   def persisted?
     false
   end
-
 end
