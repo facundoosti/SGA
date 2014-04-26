@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require timepicker.min
+//= require colorpicker.min
+//= require daterangepicker
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
