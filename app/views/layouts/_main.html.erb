@@ -7,12 +7,14 @@
       <ul class="sidebar-menu">
         <li class="active">
             <a href="/">
-                <i class="fa fa-dashboard"></i> <span>Sistema Gestion de Aulas</span>
+              <span>Sistema Gestion de Aulas</span>
             </a>
         </li>
-        <li>
-          <%= link_to 'Agregar Aula', new_classroom_path %>
-        </li>
+        <% if can? :create, @classroom %>
+          <li>
+            <%= link_to 'Agregar Aula', new_classroom_path %>
+          </li>
+        <% end %>
         <li>
             <%= link_to 'Listar Aulas', classrooms_path %>
         </li>

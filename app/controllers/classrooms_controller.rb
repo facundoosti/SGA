@@ -1,11 +1,12 @@
 class ClassroomsController < ApplicationController
   before_action :set_classroom, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  load_and_authorize_resource
 
   # GET /classrooms
   # GET /classrooms.json
   def index
-    @classrooms = ClientApi.class_room_all
+    @classrooms = ClientApi.classroom_all
   end
 
   # GET /classrooms/1

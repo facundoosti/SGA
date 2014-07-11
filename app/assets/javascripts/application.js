@@ -15,6 +15,9 @@
 //= require timepicker.min
 //= require colorpicker.min
 //= require daterangepicker
+//= require inputmask
+//= require inputmask.date.extensions
+//= require inputmask.extensions
 //= require turbolinks
 //= require bootstrap
 //= require_tree .

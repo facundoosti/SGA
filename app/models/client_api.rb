@@ -1,6 +1,6 @@
 class ClientApi
   class << self
-    def class_room_all
+    def classroom_all
       response = JSON.parse RestClient.get "#{APP_CONFIG['api_host']}/resources"
       
       classrooms =  []

@@ -10,6 +10,13 @@ class User < ActiveRecord::Base
 
   devise :omniauthable, :omniauth_providers => [:facebook, :google_oauth2, :twitter]  
 
+  def celador?
+    rol.to_sym == :celador  
+  end
+
+  def docente?
+    rol.to_sym == :docente  
+  end
 
   def self.find_for_facebook_oauth(auth)
   where(auth.slice(:provider, :uid)).first_or_create do |user|
