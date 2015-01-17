@@ -5,6 +5,13 @@ class AvailabilitiesController < ApplicationController
   # GET /availabilities
   # GET /availabilities.json
   def index
+=begin 
+   @params=""
+    if params[:date].present? && params[:limit].present?
+      @params << "date=#{params[:date]}&limit=#{params[:limit]}"
+      @availabilities = ClientApi.availabilities_list @link, @params
+    end  
+=end    
     @link = params[:link]
     unless params[:flag] == 'true'
       @link = "#{params[:link]}"

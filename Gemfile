@@ -27,7 +27,7 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'rb-readline' , '~> 0.4.2'
+gem 'rb-readline' , '~> 0.5.1'
 
 gem "figaro"
 

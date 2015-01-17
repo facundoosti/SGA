@@ -18,14 +18,21 @@ class ClientApi
 
     def bookings_list link, params=""
 
-      response = JSON.parse RestClient.get "#{link}/bookings?#{params}"
+    end 
 
-      bookings =  []
-      response['bookings'].each do |book| 
-        bookings << Booking.new(start:book['start'], end:book['end'], status:book['status'], user:book['user'], links: book['links'])
-      end
-      bookings
-    end  
+    def bookings_list_for_user user
+      raise user.bookings.inspect
+      classrooms = self.classroom_all
+      response = []
+      classrooms.each do |cr|    
+        response << (JSON.parse RestClient.get "#{cr.link}/bookings?")
+      end   
+      my_bookings = []
+      classrooms.each do |cr|
+        my_bookings << cr["bookings"]
+      end        
+
+    end 
 
     def availabilities_list link, params=""
 
