@@ -8,8 +8,13 @@ SGA::Application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
-  get 'my_bookings/' => 'my_bookings#index'
+  get 'configurations/' => 'configurations#index'
+  
+  post 'configurations/' => 'configurations#edit'
 
+  post 'booking/authorize' => 'bookings#authorize'
+
+  post 'booking/reject' => 'bookings#reject'
 
   root  to: "home#index"
 

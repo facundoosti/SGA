@@ -1,7 +1,11 @@
 api_host: 'http://localhost:9292'
+mailer_time: 1
 development:
+  mailer_time: 1
   api_host: 'http://localhost:9292'
 test:
+  mailer_time: 1
   api_host: 'http://localhost:9292'
-production:
+production: 
+  mailer_time: 1
   api_host: 'http://localhost:9292'

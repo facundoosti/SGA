@@ -20,12 +20,12 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                     <div class="pull-right">
-                      <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-default btn-flat" %>
+                      <%= link_to 'Salir', destroy_user_session_path, method: :delete, class: "btn btn-default btn-flat" %>
                     </div>
                 </li>
             </ul>
           <% else %>
-            <%= link_to 'Sign In', new_user_session_path, class: "btn btn-default btn-flat" %>
+            <%= link_to 'Iniciar Sesion', new_user_session_path, class: "btn btn-default btn-flat" %>
           <% end %>
         </li>
       </ul>  

@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-danger">
+      <div class="box-header">
+        <h2 class="box-title">Configuración</h2>
+      </div>
+      
+      <br>
+      <div class="box-body">
+  			<%= form_for :configuration do |f| %>
+	        <div class="form-group">
+	          <label class="col-md-3">Tiempo para envio de email:</label>
+	          <div class="input-group">
+	            <input type="number" name="mailer_time" class="form-control" min="1" max="24"  value= <%="#{APP_CONFIG['mailer_time']}" %> >
+	          </div>
+	        </div>
+					<p>Nota:Configure una medida de tiempo en horas para enviar mails antes de que la reserva sea cumplida.</p> 
+					<div class="form-group">
+			      <div class="input-group">
+			        <button type="submit" class="btn btn-primary">Guardar</button>
+			      </div>  
+			    </div>  
+			  <% end %>     

@@ -4,8 +4,8 @@ class BookingsController < ApplicationController
 
   # GET /bookings
   # GET /bookings.json
-  def index
-    @link = params[:link]
+  def index 
+    @link = params[:classroom][:links].first[:uri] if params[:classroom] 
     unless params[:flag] == 'true'
       @link = "#{params[:link]}"
       @params= "date=#{params[:date]}&limit=#{params[:limit]}&status=#{params[:status]}"
@@ -26,6 +26,20 @@ class BookingsController < ApplicationController
 
   # GET /bookings/1/edit
   def edit
+  end
+
+  def authorize
+    links = params[:booking][:links].find{|book| book[:rel].eql? 'accept' }
+    links[:method]='PUT'
+    response = ClientApi.authorize_book links
+    render action: 'index',  location: @booking
+  end
+
+  def reject
+    links = params[:booking][:links].find{|book| book[:rel].eql? 'reject' }
+    links[:method]='DELETE'
+    response = ClientApi.reject_book links
+    render action: 'index',  location: @booking
   end
 
   # POST /bookings

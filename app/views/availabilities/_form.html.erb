@@ -11,28 +11,22 @@
         </ul>
       </div>
     <% end %>
+    <%= hidden_field_tag 'link', @link %>
+
 
     <div class="form-group">
-      <label>Date and time range:</label>
+      <label>Rango de Tiempo para la Reserva:</label>
       <div class="input-group">
         <div class="input-group-addon">
             <i class="fa fa-clock-o"></i>
         </div>
-        <input type="text" class="form-control pull-right" id="reservationtime">
+        <input type="text" name="daterange" class="form-control pull-right" id="reservationtime">
       </div>
     </div><!-- /.input group -->
-
-
-    <div class="field">
-      <%= f.label :from %><br>
-      <%= f.text_field :from %>
-    </div>
-    <div class="field">
-      <%= f.label :to %><br>
-      <%= f.text_field :to %>
-    </div>
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </div>  
+    </div>  
   <% end %>
     

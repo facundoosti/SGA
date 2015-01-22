@@ -18,9 +18,11 @@
         <li>
             <%= link_to 'Listar Aulas', classrooms_path %>
         </li>
-        <li>
-            <%= link_to 'Mis Reservas', {controller: :my_bookings} %>
-        </li>
+        <% if can? :create, @classroom %>
+          <li>
+            <%= link_to 'Configuración', configurations_path %>
+          </li>
+        <% end %>
       </ul>
     </section>
                 <!-- /.sidebar -->

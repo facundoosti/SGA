@@ -4,15 +4,8 @@ class AvailabilitiesController < ApplicationController
 
   # GET /availabilities
   # GET /availabilities.json
-  def index
-=begin 
-   @params=""
-    if params[:date].present? && params[:limit].present?
-      @params << "date=#{params[:date]}&limit=#{params[:limit]}"
-      @availabilities = ClientApi.availabilities_list @link, @params
-    end  
-=end    
-    @link = params[:link]
+  def index  
+    @link = params[:classroom][:links].first[:uri] if params[:classroom] 
     unless params[:flag] == 'true'
       @link = "#{params[:link]}"
       @params= "date=#{params[:date]}&limit=#{params[:limit]}"
@@ -28,6 +21,7 @@ class AvailabilitiesController < ApplicationController
   # GET /availabilities/new
   def new
     @availability = Availability.new
+    @link = params[:links].first[:link]
   end
 
   # GET /availabilities/1/edit
@@ -37,6 +31,11 @@ class AvailabilitiesController < ApplicationController
   # POST /availabilities
   # POST /availabilities.json
   def create
+    daterange = params[:daterange].split('-')
+    from =  Date._parse daterange.first.rstrip
+    raise from.inspect
+    to =  daterange.last.lstrip
+    ClientApi.book_create params[:link], from, to 
     @availability = Availability.new(availability_params)
 
     respond_to do |format|
