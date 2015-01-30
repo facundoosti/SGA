@@ -8,46 +8,37 @@
       </div>
       <div class="box-body">
         <%= form_tag '/bookings' , method: "get" do %>
-         <!-- Date dd/mm/yyyy -->
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-md-3">
             <div class="form-group">
-              <label class="col-sm-2" >Fecha</label>
+              <label class="col-sm-3" >Fecha</label>
               <div class="input-group">
-                  <input type="date" name="date" class="form-control" placeholder="YYYY-MM-DD" value= <%="#{params[:date]}" %> />
+                  <input type="date" name="date" class="col-sm-7 form-control" placeholder="YYYY-MM-DD" value= <%="#{params[:date]}" %> />
               </div><!-- /.input group -->
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-md-3">
             <div class="form-group">
-              <label class="col-sm-2">Rango</label>
+              <label class="col-md-3">Rango</label>
               <div class="input-group">
                 <input type="number" name="limit" class="form-control" min="0" max="365"  value= <%="#{params[:limit]}" %> >
               </div>
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-md-4">
             <div class="form-group">
-              <label class="col-sm-2">Estado</label>
+              <label class="col-md-3">Estado</label>
               <div class="input-group">
-                <select name="status" class="form-control input-sm" value= <%="#{params[:status]}" %>>
-                    <option></option>
-                    <option value='approved'>Aprobado</option>
-                    <option value='pending'>Pendientes</option>
-                    <option value='all'>Todas</option>
-                </select>
+                <%= select_tag "status", options_for_select([["Aprobadas","approved"],["Pendientes","pending"],["Todas","all"]], params[:status]), {:include_blank => true, class:"form-control input-sm"}%>
               </div><!-- /.form group -->
-                <button type="submit" class="btn btn-primary pull-right">Buscar</button>
             </div>
           </div><!-- /.form group -->
-        <%= hidden_field_tag 'link', @link %>
-        <%= hidden_field_tag 'flag', false %>
+        <button type="submit" class="col-md-1 btn btn-primary">Buscar</button>
       <% end %>
       </div>
     </div>  
   </div>      
 
-  <% unless @bookings.nil? %> 
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
@@ -73,16 +64,16 @@
                 <td><%= booking["user"] %></td>
                 
                 <% if is_my_book? booking %>
-                  <td><%= link_to 'Cancelar Reserva', booking_reject_path(booking: booking), method: :post, data: { confirm: 'Esta seguro que desea cancelar la Reserva?' }, class: "btn btn-danger btn-sm" %></td>
+                  <td><%= link_to 'Cancelar Mi Reserva', booking_reject_path(booking: booking, link: @link), method: :post, data: { confirm: 'Esta seguro que desea cancelar la Reserva?' }, class: "btn btn-danger btn-sm" %></td>
                 <% end %>                
 
 
                 <% if (can? :delete, @bookings) &  booking["status"].eql?("pending") %>
-                  <td><%= link_to 'Cancelar Reserva', booking_reject_path(booking: booking), method: :post, data: { confirm: 'Esta seguro que desea cancelar la Reserva?' }, class: "btn btn-danger btn-sm" %></td>
+                  <td><%= link_to 'Cancelar Reserva', booking_reject_path(booking: booking, link: @link), method: :post, data: { confirm: 'Esta seguro que desea cancelar la Reserva?' }, class: "btn btn-danger btn-sm" %></td>
                 <% end %>
                 
                 <% if (can? :authorizated, @bookings) &  booking["status"].eql?("pending")%>
-                  <td><%= link_to 'Autorizar', booking_authorize_path(booking: booking), method: :post, class: "btn btn-primary btn-sm" %></td>
+                  <td><%= link_to 'Autorizar', booking_authorize_path(booking: booking, link: @link), method: :post, class: "btn btn-primary btn-sm" %></td>
                 <% end %>
                 
               </tr>
@@ -93,5 +84,4 @@
         <br>
 
     </div><!-- /.box-body -->
-    <% end %>
 </div><!-- /.box -->

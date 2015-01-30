@@ -24,12 +24,18 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
+gem 'jquery-turbolinks'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
 gem 'rb-readline' , '~> 0.5.1'
 
 gem "figaro"
+
+gem 'whenever', :require => false
+
+gem 'sidekiq'
 
 gem 'bootstrap-sass'
 
@@ -56,6 +62,7 @@ group :doc do
 end
 group :development do
   gem 'rails_layout'
+  gem 'foreman'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
   gem 'quiet_assets'

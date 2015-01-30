@@ -5,13 +5,10 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index 
-    @link = params[:classroom][:links].first[:uri] if params[:classroom] 
-    unless params[:flag] == 'true'
-      @link = "#{params[:link]}"
-      @params= "date=#{params[:date]}&limit=#{params[:limit]}&status=#{params[:status]}"
-      @bookings = ClientApi.bookings_list @link, @params
-    end
-       
+    session[:link_to_bookings] = params[:classroom][:links].last[:uri] if (params[:classroom])   
+    @link = session[:link_to_bookings]
+    @params= "date=#{params[:date]}&limit=#{params[:limit]}&status=#{params[:status]}"
+    @bookings = ClientApi.bookings_list @link, @params
   end
 
   # GET /bookings/1
@@ -21,7 +18,9 @@ class BookingsController < ApplicationController
 
   # GET /bookings/new
   def new
-    @booking = Booking.new
+    @from = params[:from]
+    @to = params[:to]
+    @link = params[:links].first[:link]
   end
 
   # GET /bookings/1/edit
@@ -31,30 +30,44 @@ class BookingsController < ApplicationController
   def authorize
     links = params[:booking][:links].find{|book| book[:rel].eql? 'accept' }
     links[:method]='PUT'
-    response = ClientApi.authorize_book links
-    render action: 'index',  location: @booking
+    begin
+      response = ClientApi.authorize_book links
+      redirect_to bookings_path, notice: 'La Reserva ha sido aprobada.'
+    rescue
+      flash[:error]= 'La Reserva ya existe o se ha detectado algun conflicto.'
+      redirect_to bookings_path
+    end  
   end
 
   def reject
     links = params[:booking][:links].find{|book| book[:rel].eql? 'reject' }
     links[:method]='DELETE'
-    response = ClientApi.reject_book links
-    render action: 'index',  location: @booking
+    begin  
+      response = ClientApi.reject_book links
+      redirect_to bookings_path, notice: 'La Reserva ha sido rechazada.'
+    rescue
+      flash[:error]= 'La Reserva ya existe o se ha detectado algun conflicto.'
+      redirect_to bookings_path
+    end
   end
 
   # POST /bookings
   # POST /bookings.json
   def create
-    @booking = Booking.new(booking_params)
-
-    respond_to do |format|
-      if @booking.save
-        format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @booking }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
-      end
+    if params[:daterange].present?
+      daterange = params[:daterange].split(' - ')
+      from =  daterange.first.rstrip
+      to =  daterange.last.lstrip
+      
+      begin 
+        ClientApi.book_create params[:link], from, to, current_user.email 
+        redirect_to availabilities_path, notice: 'La Reserva ha sido creada correctamente'
+      rescue
+        flash[:error]= 'La Reserva ya existe o se ha detectado algun conflicto.'
+        redirect_to availabilities_path
+      end  
+    else
+      redirect_to :root
     end
   end
 

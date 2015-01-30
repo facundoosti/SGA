@@ -19,5 +19,14 @@
 //= require inputmask.date.extensions
 //= require inputmask.extensions
 //= require turbolinks
+//= require jquery.turbolinks
 //= require bootstrap
 //= require_tree .
+
+
+$(document).ready(function () {
+  $(".close").click(function(){
+    $(".alert").hide("slow");
+  });
+  $(".alert").delay(4000).fadeOut('Slow');
+});

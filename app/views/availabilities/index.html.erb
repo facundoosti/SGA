@@ -23,7 +23,6 @@
                 <input type="number" name="limit" class="form-control" min="0" max="365"  value= <%="#{params[:limit]}"%> >
               </div>
           </div><!-- /.form group -->
-          <%= hidden_field_tag 'link', @link %>
           <div class="col-md-4">
               <button type="submit" class="btn btn-primary">Buscar</button>
           </div>
@@ -37,8 +36,11 @@
   
   <div class="col-xs-12">
     <div class="box">
-      <div class="box-header">
-        <h3 class="box-title">Listado de Disponibilidad de Aulas</h3>                              
+      <div class="box-body">
+        <h3>Listado de Disponibilidad de Aulas</h3><br>                              
+        <dl>
+          <dt>Aula: </dt>
+          <dd><%= @classroom %></dd>                        
       </div><!-- /.box-header -->
       
       <div class="box-body table-responsive">     
@@ -46,8 +48,8 @@
         <table id="example2" class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th>From</th>
-              <th>To</th>
+              <th>Desde</th>
+              <th>Hasta</th>
             </tr>
           </thead>
 
@@ -56,7 +58,7 @@
               <tr>
                 <td><%= availability.from %></td>
                 <td><%= availability.to %></td>
-                <td><%= link_to 'Reservar Aula', new_availability_path(links: availability.links), class: "btn btn-danger btn-sm" %></td>
+                <td><%= link_to 'Reservar Aula', new_booking_path(from:availability.from ,to:availability.to ,links: availability.links), class: "btn btn-danger btn-sm" %></td>
               </tr>
             <% end %>
           </tbody>

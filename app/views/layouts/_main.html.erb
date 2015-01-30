@@ -31,6 +31,25 @@
   <aside class="right-side">
     <!-- Main content -->
     <section class="content">
+    
+      <% if flash[:error] %>
+        <div class="alert alert-danger">
+            <button class="close" type="button" data="dismiss-alert">
+              &times;
+            </button>  
+            <%= flash[:error] %>
+        </div>    
+      <% end %>    
+      <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <button class="close" type="button" data="dismiss-alert">
+            &times;
+          </button>  
+          <%= flash[:notice] %>
+        </div>    
+      <% end %>    
+
+
       <%= yield %>
     </section><!-- /.content -->
   </aside><!-- /.right-side -->
