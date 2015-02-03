@@ -45,12 +45,10 @@ class ClassroomsController < ApplicationController
   end
 
   def create
-    @classroom = Classroom.new(classroom_params)
-    
     respond_to do |format|
       begin
-        ClientApi.classroom_create(@classroom)
-        format.html { redirect_to @classroom, notice: 'El Aula se ha creado Exitosamente.' }
+        ClientApi.classroom_create(classroom_params)
+        format.html { redirect_to classrooms_path, notice: 'El Aula se ha creado Exitosamente.' }
       rescue 
         @classroom={name:'', description:''}
         @action = {action: :create}

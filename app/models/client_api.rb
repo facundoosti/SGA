@@ -20,10 +20,9 @@ class ClientApi
     end
 
     #Crea un recurso
-    def classroom_create classrooms
-      response = JSON.parse RestClient.post "#{APP_CONFIG['api_host']}/resources", {name: classrooms.name, description: classrooms.description }
+    def classroom_create classroom
+      response = JSON.parse RestClient.post "#{APP_CONFIG['api_host']}/resources", classroom
       response = response['resource']
-      Classroom.new name:response['name'], description:response['description']
     end
 
     #Lista Reservas
