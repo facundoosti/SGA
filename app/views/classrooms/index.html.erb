@@ -2,7 +2,16 @@
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Listado de Aulas</h3>                                    
+        <h3 class="box-title">Listado de Aulas</h3>
+        <% if can? :create, @classroom %>
+        <br>
+          <div class="col-md-8">
+          </div>          
+          <div class="col-md-2">
+            <%= link_to 'Agregar Aula', new_classroom_path, class: "btn btn-primary pull-right" %>
+          </div>          
+          
+        <% end %>                                    
       </div><!-- /.box-header -->
       <div class="box-body table-responsive">
         <table id="example2" class="table table-bordered table-hover">
@@ -27,11 +36,15 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
 
-                        <li><%= link_to 'Disponibilidad',  availabilities_path(classroom: (ClientApi.resource classroom['links'].first['uri'])) %></li>
-                        <li><%= link_to 'Listar Reservas', bookings_path(classroom: (ClientApi.resource classroom['links'].first['uri'])) %></li>
+                        <li><%= link_to 'Disponibilidad',  availabilities_path(classroom: (ClientApi.classroom classroom['links'].first['uri'])) %></li>
+                        <li><%= link_to 'Listar Reservas', bookings_path(classroom: (ClientApi.classroom classroom['links'].first['uri'])) %></li>,
                       </ul>
                   </div>
                 </td>
+                <td>
+                  <%= link_to "",{ controller: 'classrooms', action: 'editar', link: classroom['links'].first['uri'] }, {class: "btn btn-default ion ion-edit",   alt:"Editar Aula",  title: "Editar Aula"}  %>
+                </td>
+              
               </tr>
             <% end %>
           </tbody>

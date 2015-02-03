@@ -4,7 +4,11 @@ SGA::Application.routes.draw do
 
   resources :bookings
 
+  get 'classrooms/edit' => 'classrooms#editar'
+  put 'classrooms/' => 'classrooms#modificar'
+  
   resources :classrooms
+  
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
@@ -17,6 +21,9 @@ SGA::Application.routes.draw do
   post 'booking/reject' => 'bookings#reject'
 
   root  to: "home#index"
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

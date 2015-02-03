@@ -28,10 +28,13 @@ class BookingsController < ApplicationController
   end
 
   def authorize
-    links = params[:booking][:links].find{|book| book[:rel].eql? 'accept' }
-    links[:method]='PUT'
+    if params[:booking]
+      links = params[:booking][:links].find{|book| book[:rel].eql? 'accept' }
+      links[:method]='PUT'
+      user=params[:booking][:user]
+    end
     begin
-      response = ClientApi.authorize_book links
+      response = ClientApi.authorize_book links, user
       redirect_to bookings_path, notice: 'La Reserva ha sido aprobada.'
     rescue
       flash[:error]= 'La Reserva ya existe o se ha detectado algun conflicto.'
@@ -40,10 +43,13 @@ class BookingsController < ApplicationController
   end
 
   def reject
-    links = params[:booking][:links].find{|book| book[:rel].eql? 'reject' }
-    links[:method]='DELETE'
+    if params[:booking]
+      links = params[:booking][:links].find{|book| book[:rel].eql? 'reject' }
+      links[:method]='DELETE'
+      user=params[:booking][:user]
+    end
     begin  
-      response = ClientApi.reject_book links
+      response = ClientApi.reject_book links, user
       redirect_to bookings_path, notice: 'La Reserva ha sido rechazada.'
     rescue
       flash[:error]= 'La Reserva ya existe o se ha detectado algun conflicto.'

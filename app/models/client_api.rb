@@ -1,16 +1,22 @@
 class ClientApi
   class << self
     
-    #Ver los recursos
-    def resource link
-      response = JSON.parse RestClient.get "#{link}"
-      response['resource']
-    end
-    
     #Lista los recursos
     def classroom_all
       response = JSON.parse RestClient.get "#{APP_CONFIG['api_host']}/resources"
       response['resources']
+    end
+    
+    #Ver los recursos
+    def classroom link
+      response = JSON.parse RestClient.get "#{link}"
+      response['resource']
+    end
+
+    #Modificar los recursos
+    def classroom_update link, params
+      response = JSON.parse RestClient.put link,  params, {:content_type => :json}
+      response['resource']
     end
 
     #Crea un recurso
@@ -26,40 +32,33 @@ class ClientApi
       response['bookings']
     end 
 
+    #Lista todas las Reservas aprobadas de todos los Recursos desde el dia actual hasta un año despues
     def approved_books
       resources = classroom_all
       links = resources.map{ |r| r['links'].first['uri']}
       bookings = []
       links.each do |link|
-        bookings << bookings_list(link, 'status=approved')
+        bookings << bookings_list(link+"/bookings", 'limit=365&status=approved')
       end
-      bookings  
-=begin   
-      emails = []
-      bookings.each do|book|
-        if book[:start] <= APP_CONFIG[:mailer_time]
-          email << book
-        end 
-      end
-=end  
+      bookings.flatten  
     end
 
     #Crea una Reserva
     def book_create link, from, to, user
       response = RestClient.post "#{link}?", {from: from , to: to, user: user}
-      BookingMailer.status_change("Pendiente").deliver
+      BookingMailer.status_change("Pendiente", user).deliver
     end 
 
     #Autoriza una Reserva
-    def authorize_book links
+    def authorize_book links, user
       response = JSON.parse RestClient.put links[:uri],  {:content_type => :json}
-      BookingMailer.status_change("Autorizado").deliver
+      BookingMailer.status_change("Autorizado", user).deliver
     end
 
     #Rechaza una Reserva
-    def reject_book links
+    def reject_book links, user
       response = RestClient.delete links[:uri]
-      BookingMailer.status_change("Rechazado").deliver
+      BookingMailer.status_change("Rechazado", user).deliver
     end 
      
     def availabilities_list link, params=""

@@ -1,13 +1,12 @@
 class BookingMailer < ActionMailer::Base
   default from: "sga@sga.com"
 
-  def status_change status, booking=""
+  def status_change status, user
     @status = status
-    mail(to: "facundoosti@gmail.com", subject: 'Cambio de Estado de la Reserva')
+    mail(to: user, subject: 'Cambio de Estado de la Reserva')
   end
 
-  def reservation_fulfillment
-    @start = ""
-    mail(to: "facundoosti@gmail.com", subject: 'Cambio de Estado de la Reserva')
+  def reservation_fulfillment user
+    mail(to: user, subject: 'Cumplimiento de Reserva')
   end
 end

@@ -10,11 +10,6 @@
               <span>Sistema Gestion de Aulas</span>
             </a>
         </li>
-        <% if can? :create, @classroom %>
-          <li>
-            <%= link_to 'Agregar Aula', new_classroom_path %>
-          </li>
-        <% end %>
         <li>
             <%= link_to 'Listar Aulas', classrooms_path %>
         </li>
@@ -23,6 +18,10 @@
             <%= link_to 'Configuración', configurations_path %>
           </li>
         <% end %>
+        <li>
+          <%= link_to 'Monitoring', sidekiq_web_path %>
+        </li>
+
       </ul>
     </section>
                 <!-- /.sidebar -->

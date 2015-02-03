@@ -33,7 +33,7 @@ gem 'rb-readline' , '~> 0.5.1'
 
 gem "figaro"
 
-gem 'whenever', :require => false
+gem 'sidetiq'
 
 gem 'sidekiq'
 
@@ -62,6 +62,8 @@ group :doc do
 end
 group :development do
   gem 'rails_layout'
+  gem 'sinatra', :require => nil
+
   gem 'foreman'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
